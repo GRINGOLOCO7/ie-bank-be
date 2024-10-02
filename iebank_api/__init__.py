@@ -22,7 +22,7 @@ elif os.getenv('ENV') == 'ghci':
     app.config.from_object('config.GithubCIConfig')
 else:
     print("Running in production mode")
-    app.config.from_object('config.ProductionConfig')
+    app.config.from_object('config.ProductionConfig') # LocalConfig
 
 db = SQLAlchemy(app)
 
