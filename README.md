@@ -177,3 +177,37 @@ The workflow uses the following GitHub secrets:
 Secret name | Description | Learn more
 --- | --- | ---
 `AZURE_CREDENTIALS` | Azure credentials to authenticate to Azure via Service Principal | [Use the Azure login action with a service principal secret](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#use-the-azure-login-action-with-a-service-principal-secret)
+
+
+
+
+
+
+# My configuration
+
+## Environment
+
+`conda info --envs`
+
+`conda activate Software_Devops`
+
+`conda create --name Software_Devops`
+
+`conda list -n Software_Devops` -> see packages installed
+
+`conda deactivate`
+
+
+## Install requironments
+
+`pip install Flask==2.2.2`
+
+`pip install Flask-Cors==3.0.10`
+
+`pip install Flask-SQLAlchemy==2.5.1`
+
+`pip install psycopg2`
+
+`pip install SQLAlchemy==1.4.41`
+
+`pip install python-dotenv==0.21.0`

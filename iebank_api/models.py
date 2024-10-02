@@ -1,3 +1,5 @@
+# declare HTTP endpoints for the API that I'll expose
+
 from iebank_api import db
 from datetime import datetime
 import string, random
