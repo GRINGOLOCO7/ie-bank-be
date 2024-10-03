@@ -211,3 +211,27 @@ Secret name | Description | Learn more
 `pip install SQLAlchemy==1.4.41`
 
 `pip install python-dotenv==0.21.0`
+
+
+
+# Usage
+
+1. Crate an account:
+
+    curl -X POST http://127.0.0.1:5000/accounts -H "Content-Type: application/json" -d '{"name": "John Doe", "currency": "USD"}'
+
+2. Get all accounts:
+
+    curl -X GET http://127.0.0.1:5000/accounts
+
+3. Get specific account:
+
+    curl -X GET http://127.0.0.1:5000/accounts/1
+
+4. Update account:
+
+    curl -X PUT http://127.0.0.1:5000/accounts/1 -H "Content-Type: application/json" -d '{"name": "Jane Doe"}'
+
+5. Delete account:
+
+    curl -X DELETE http://127.0.0.1:5000/accounts/1
