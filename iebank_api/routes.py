@@ -10,7 +10,8 @@ account_structure = {
     'balance': 'float',
     'currency': 'str',
     'status': 'str',
-    'created_at': 'datetime'
+    'created_at': 'datetime',
+    'country': 'str'
 }
 
 @app.route('/')
