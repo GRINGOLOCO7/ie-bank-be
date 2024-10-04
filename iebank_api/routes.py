@@ -75,6 +75,8 @@ def format_account(account):
             account_structure[key] = account.status
         elif key == 'created_at':
             account_structure[key] = account.created_at
+        elif key == 'country':
+            account_structure[key] = account.country
     return account_structure
 
 
