@@ -23,3 +23,4 @@ class Account(db.Model):
         self.currency = currency
         self.balance = 0.0
         self.status = "Active"
+        self.country = "Italy"
