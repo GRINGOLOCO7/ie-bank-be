@@ -185,19 +185,6 @@ Secret name | Description | Learn more
 
 # My configuration
 
-## Environment
-
-`conda info --envs`
-
-`conda activate Software_Devops`
-
-`conda create --name Software_Devops`
-
-`conda list -n Software_Devops` -> see packages installed
-
-`conda deactivate`
-
-
 ## Install requironments
 
 `pip install Flask==2.2.2`
