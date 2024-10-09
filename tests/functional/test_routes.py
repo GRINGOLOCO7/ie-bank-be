@@ -90,7 +90,7 @@ def test_delete_account(testing_client, add_account):
     THEN check the account is removed from the database
     """
     # Add a test account
-    account = add_account('ironman', '€', 'Italy')
+    account = add_account('thor', '€', 'spain')
     assert account is not None  # Ensure account was created
 
     response = testing_client.delete(f'/accounts/{account.id}')

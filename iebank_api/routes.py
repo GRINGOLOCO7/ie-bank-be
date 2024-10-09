@@ -36,6 +36,8 @@ def get_accounts():
 @app.route('/accounts/<int:id>', methods=['GET'])
 def get_account(id):
     account = Account.query.get(id)
+    if account is None:
+        return {'error': 'Account not found'}, 404  # Return a proper error message
     return format_account(account)
 
 @app.route('/accounts/<int:id>', methods=['PUT'])
@@ -50,20 +52,16 @@ def update_account(id):
 def delete_account(id):
     account = Account.query.get(id)
     if account is None:
-        return format({'error': 'Account not found'}), 404
+        return {'error': 'Account not found'}, 404
 
-    db.session.delete(account)  # Mark the account for deletion
-    db.session.commit()  # Commit the session to persist the changes
-    return format({'message': 'Account deleted'}), 200
-
-@app.route('/accounts/<int:id>', methods=['DELETE'])
-def add_field():
-    account = Account.query.get(id)
     db.session.delete(account)
     db.session.commit()
-    return format_account(account)
+    return {'message': 'Account deleted'}, 200
 
 def format_account(account):
+    if account is None:
+        return {'error': 'Account not found'}
+
     global account_structure
     for key in account_structure:
         if key == 'id':
@@ -83,6 +81,7 @@ def format_account(account):
         elif key == 'country':
             account_structure[key] = account.country
     return account_structure
+
 
 
 
