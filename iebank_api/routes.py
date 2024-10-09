@@ -43,6 +43,8 @@ def get_account(id):
 @app.route('/accounts/<int:id>', methods=['PUT'])
 def update_account(id):
     account = Account.query.get(id)
+    if account is None:  # Check if the account exists
+        return {'error': 'Account not found'}, 404
     account.name = request.json['name']
     account.balance = request.json['balance']
     db.session.commit()

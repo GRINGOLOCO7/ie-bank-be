@@ -99,3 +99,38 @@ def test_delete_account(testing_client, add_account):
     # Ensure the account was deleted
     response = testing_client.get(f'/accounts/{account.id}')
     assert response.status_code == 404
+
+def test_get_non_existent_account(testing_client):
+    """
+    GIVEN a Flask application
+    WHEN a non-existent account is requested (GET)
+    THEN check the response is 404
+    """
+    response = testing_client.get('/accounts/9999')  # Non-existent ID
+    assert response.status_code == 404
+    data = response.get_json()
+    assert data['error'] == 'Account not found'
+
+
+def test_update_non_existent_account(testing_client):
+    """
+    GIVEN a Flask application
+    WHEN an update request is made for a non-existent account (PUT)
+    THEN check the response is 404
+    """
+    response = testing_client.put('/accounts/9999', json={'name': 'Updated Name', 'balance': 100.0})
+    assert response.status_code == 404
+    data = response.get_json()
+    assert data['error'] == 'Account not found'
+
+
+def test_delete_non_existent_account(testing_client):
+    """
+    GIVEN a Flask application
+    WHEN a delete request is made for a non-existent account (DELETE)
+    THEN check the response is 404
+    """
+    response = testing_client.delete('/accounts/9999')
+    assert response.status_code == 404
+    data = response.get_json()
+    assert data['error'] == 'Account not found'
