@@ -1,14 +1,5 @@
-from iebank_api import app
+from iebank_api import app, db
 import pytest
-
-def test_get_accounts(testing_client):
-    """
-    GIVEN a Flask application
-    WHEN the '/accounts' page is requested (GET)
-    THEN check the response is valid
-    """
-    response = testing_client.get('/accounts')
-    assert response.status_code == 200
 
 def test_dummy_wrong_path():
     """
@@ -20,13 +11,91 @@ def test_dummy_wrong_path():
         response = client.get('/wrong_path')
         assert response.status_code == 404
 
+# GET
+def test_get_accounts(testing_client, add_account):
+    """
+    GIVEN a Flask application
+    WHEN the '/accounts' page is requested (GET)
+    THEN check the response is valid and includes accounts
+    """
+    # Add a test account
+    add_account('ironman', '€', 'Italy')
+
+    response = testing_client.get('/accounts')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert len(data['accounts']) > 0  # Ensure there's at least one account
+
+# POST
 def test_create_account(testing_client):
     """
     GIVEN a Flask application
     WHEN the '/accounts' page is posted to (POST)
     THEN check the response is valid
     """
-    response = testing_client.post('/accounts', json={'name': 'John Doe', 'currency': '€'})
+    response = testing_client.post('/accounts', json={'name': 'ironman', 'currency': '€', 'country': 'Italy'})
     assert response.status_code == 200
 
+    # Check if the response contains the newly created account
+    data = response.get_json()
+    assert data['name'] == 'ironman'
+    assert data['currency'] == '€'
+    assert data['country'] == 'Italy'
 
+# POST2
+def test_create_account2(testing_client):
+    """
+    GIVEN a Flask application
+    WHEN the '/accounts' page receives a POST request
+    THEN check that a code 200 is returned with the newly created account information
+    """
+    with app.app_context():
+        db.create_all()  # Ensure you're in the app context when interacting with the database
+        response = testing_client.post('/accounts', json={
+            'name': 'Test Account',
+            'currency': '€',
+            'country': 'Italy'
+        })
+        assert response.status_code == 200
+        assert response.json['name'] == 'Test Account'
+        assert response.json['currency'] == '€'
+        assert response.json['country'] == 'Italy'
+
+# PUT
+def test_update_account(testing_client, add_account):
+    """
+    GIVEN a Flask application
+    WHEN an account is updated (PUT)
+    THEN check the account fields are updated correctly
+    """
+    # Add a test account
+    account = add_account('ironman', '€', 'Italy')
+
+    response = testing_client.put(f'/accounts/{account.id}', json={
+        'name': 'ironman Updated',
+        'balance': 100.0
+    })
+    assert response.status_code == 200
+
+    # Check if the account was updated
+    data = response.get_json()
+    assert data['name'] == 'ironman Updated'
+    assert data['balance'] == 100.0
+
+# DELETE
+def test_delete_account(testing_client, add_account):
+    """
+    GIVEN a Flask application
+    WHEN an account is deleted (DELETE)
+    THEN check the account is removed from the database
+    """
+    # Add a test account
+    account = add_account('ironman', '€', 'Italy')
+    assert account is not None  # Ensure account was created
+
+    response = testing_client.delete(f'/accounts/{account.id}')
+    assert response.status_code == 200
+
+    # Ensure the account was deleted
+    response = testing_client.get(f'/accounts/{account.id}')
+    assert response.status_code == 404

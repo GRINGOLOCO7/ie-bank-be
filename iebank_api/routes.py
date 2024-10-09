@@ -23,7 +23,7 @@ def create_account():
     name = request.json['name']
     currency = request.json['currency']
     country = request.json['country']
-    account = Account(name, currency)
+    account = Account(name, currency, country)
     db.session.add(account)
     db.session.commit()
     return format_account(account)
@@ -49,9 +49,12 @@ def update_account(id):
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def delete_account(id):
     account = Account.query.get(id)
-    db.session.delete(account)
-    db.session.commit()
-    return format_account(account)
+    if account is None:
+        return format({'error': 'Account not found'}), 404
+
+    db.session.delete(account)  # Mark the account for deletion
+    db.session.commit()  # Commit the session to persist the changes
+    return format({'message': 'Account deleted'}), 200
 
 @app.route('/accounts/<int:id>', methods=['DELETE'])
 def add_field():
