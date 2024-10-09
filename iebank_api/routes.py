@@ -22,6 +22,7 @@ def index():
 def create_account():
     name = request.json['name']
     currency = request.json['currency']
+    country = request.json['country']
     account = Account(name, currency)
     db.session.add(account)
     db.session.commit()
@@ -89,7 +90,9 @@ def format_account(account):
 #################################################################
 
 
-
+@app.route('/update')
+def update():
+    return render_template('update.html')
 
 @app.route('/skull', methods=['GET'])
 def skull():

@@ -205,7 +205,7 @@ Secret name | Description | Learn more
 
 1. Crate an account:
 
-    curl -X POST http://127.0.0.1:5000/accounts -H "Content-Type: application/json" -d '{"name": "John Doe", "currency": "USD"}'
+    curl -X POST http://127.0.0.1:5000/accounts -H "Content-Type: application/json" -d '{"name": "Batman", "currency": "USD", "country":"Italy"}'
 
 2. Get all accounts:
 
@@ -222,3 +222,21 @@ Secret name | Description | Learn more
 5. Delete account:
 
     curl -X DELETE http://127.0.0.1:5000/accounts/1
+
+
+
+# structure
+
+ie-bank-be/
+├── iebank_api/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── routes.py
+│   ├── templates/
+│   │   ├── index.html
+│   │   ├── update.html
+├── app.py
+├── config.py
+├── requirniment.txt
+├── .venv/
+├── .env
