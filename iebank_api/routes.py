@@ -64,27 +64,17 @@ def format_account(account):
     if account is None:
         return {'error': 'Account not found'}
 
-    global account_structure
-    for key in account_structure:
-        if key == 'id':
-            account_structure[key] = account.id
-        elif key == 'name':
-            account_structure[key] = account.name
-        elif key == 'account_number':
-            account_structure[key] = account.account_number
-        elif key == 'balance':
-            account_structure[key] = account.balance
-        elif key == 'currency':
-            account_structure[key] = account.currency
-        elif key == 'status':
-            account_structure[key] = account.status
-        elif key == 'created_at':
-            account_structure[key] = account.created_at
-        elif key == 'country':
-            account_structure[key] = account.country
-    return account_structure
-
-
+    formatted_account = {
+        'id': account.id,
+        'name': account.name,
+        'account_number': account.account_number,
+        'balance': account.balance,
+        'currency': account.currency,
+        'status': account.status,
+        'created_at': account.created_at,
+        'country': account.country
+    }
+    return formatted_account
 
 
 
