@@ -240,3 +240,30 @@ ie-bank-be/
 ├── requirniment.txt
 ├── .venv/
 ├── .env
+
+
+## Run docker image
+
+build image:
+
+```
+docker build --tag iebank-be-gringo .
+```
+
+Run image:
+
+```
+docker run -d -p 5000:5000 --env-file .env iebank-be-gringo
+```
+
+view logs
+
+```
+docker logs <docker_containr_id>
+```
+
+view on going containers
+
+```
+docker ps
+```
